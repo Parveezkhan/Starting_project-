@@ -35,7 +35,7 @@ const Login=()=>{
   </label>
 </div>
 <div className='forgot-password mx-5'>
-    <Link className='mx-3' >Forgot password?</Link>
+    <Link to="/" className='mx-3 link' >Forgot password?</Link>
 </div>
   </div>
   
