@@ -3,7 +3,13 @@ import Navbar from './Navbar.js'
 
 const Home=()=>{
     return (
-       <Navbar/>
+        <>
+        <Navbar></Navbar>
+  
+</>
+
+        
+       
     )
 }
 export default Home;
