@@ -3,7 +3,8 @@ import logo from "../images/Logo...png"
 
 const Navbar=()=>{
    return (
-    <navbar>
+    <navbar >
+        <div className='border-bottom border-primary'>
     <div className="navbar-logo">
     <nav className="navbar navbar-light bg-light ">
     <Link to="/" class="navbar-brand mb-0 h1 " style={{width:'250px'}}>
@@ -14,7 +15,7 @@ const Navbar=()=>{
     </div>
      </nav>
     </div>
-    
+    </div>
 </navbar>
    )
 
