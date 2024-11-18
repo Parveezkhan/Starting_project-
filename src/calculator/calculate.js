@@ -15,42 +15,87 @@ const Dropdowns = () => {
     lab_setup: "",
     no_of_servers: 0,
     no_of_days: 0,
-
-  });
-  const [servercost_day, setServercost_day] = useState(0);
-  const [labsetupcost, setLabsetupcost] = useState(0);
-  const [ipcharges, setIpcharges] = useState(0)
-  const [servercost, setServercost] = useState(0)
-  console.log(typeof servercost_day)
+});
+  const [ram_cost, setRam_cost] = useState(0);
+  const [cpu_cost, setCpu_cost] = useState(0);
+  const [ssd_cost, setSsd_cost] = useState(0)
+  const [public_ip_cost, setPublic_ip_cost] = useState(0)
   // Handle change for each dropdown
-  const handleChange = (e) => {
+  const handleCollectConfig = (e) => {
+    e.preventDefault()
     setConfigurations(
       { ...configurations, [e.target.name]: e.target.value }
     )
-
-
-  };
-let ram=7.5;
-let cpu=40;
-let ssd=0.25;
-let public_ip_charges=1500;
-let lab_setup_cost={
-  'https':0,
-  'Intermidiate':4000,
-  'Security Lab':8000,
-  'Advaced Lab':10000,
-  'Infrastructure Lab':12000,
-}
-const [sc,setSc]=useState(0);
-  const calculateCost=()=>{
-    //server per day calculation
-    let server_day_charges=Math.ceil(Number(configurations.ram)*ram+Number(configurations.cpu)*cpu+Number(configurations.storage)*ssd);
-     {(configurations.day==='Half Day') ? (server_day_charges=server_day_charges-(server_day_charges*0.3)) : server_day_charges=server_day_charges }
-
-     //lab setup charges
-    //  let lab_setup_charges = lab_setup_cost.configurations.
+    
+    
+  }; 
+  const handle=(e)=>{
+    e.preventDefault();
+    console.log(e)
   }
-  calculateCost();
+  let ram = 7.5;
+  let cpu = 40;
+  let ssd = 0.25;
+  let public_ip_charges = 1500;
+  let lab_setup_cost = {
+    Basic: 0,
+    Intermediate: 4000,
+    Security_Labs: 8000,
+    Advanced_Labs: 10000,
+    Infrastructure_Labs: 12000,
+  }
+
+    // calculateCost();
+    const handleData = (event) => {
+      event.preventDefault();
+  
+      setRam_cost(event.target.ram_cost.value)
+      setCpu_cost(event.target.cpu_cost.value)
+      setSsd_cost(event.target.ssd_cost.value)
+      setPublic_ip_cost(event.target.public_ip_cost.value)
+      
+  
+      // //callback function
+      calculateCost();
+    }
+
+  const [total_cost, setTotal_cost] = useState(0);
+  const calculateCost = () => {
+    //server per day calculation
+    let server_day_charges = Math.ceil(Number(configurations.ram) * ram_cost+ Number(configurations.cpu) * cpu_cost+ Number(configurations.storage) * ssd_cost);
+    { (configurations.day === 'Half Day') ? (server_day_charges = server_day_charges - (server_day_charges * 0.3)) : server_day_charges = server_day_charges }
+  
+    ///  lab setup charges
+    let config = '';
+    {
+      if (configurations.lab_setup === 'Basic') {
+        config = lab_setup_cost.Basic
+      }
+      else if (configurations.lab_setup === 'Intermediate') {
+        config = lab_setup_cost.Intermediate
+      }
+      else if (configurations.lab_setup === 'Security_Labs') {
+        config = lab_setup_cost.Security_Labs
+      }
+      else if (configurations.lab_setup === 'Advanced_Labs') {
+        config = lab_setup_cost.Advanced_Labs
+      }
+      else if (configurations.lab_setup === 'Infrastructure_Labs') {
+        config = lab_setup_cost.Infrastructure_Labs
+      }
+    }
+
+    let lab_setup_charges = Math.ceil(config);
+
+    //public ip charges
+    let public_ipcharges = configurations.public_ip * public_ip_cost;
+    //server_cost_batch
+    let server_cost_per_batch = Math.ceil(server_day_charges * (Number(configurations.no_of_servers) * Number(configurations.no_of_days)));
+    
+   
+    setTotal_cost( lab_setup_charges  + public_ipcharges +  server_cost_per_batch);
+  }
+
   return (
     <>
       <Navbar />
@@ -59,7 +104,7 @@ const [sc,setSc]=useState(0);
           <div className="row p-4 h6">
             <div className="col-sm-12 col-md-6 col-lg-6 col-12 d-flex justify-content-between flex-row flex-wrap border border-4 border-info p-4 rounded my-2">
               <div className="row w-100 ">
-                <form className="d-flex flex-row flex-wrap w-100">
+                <form  className="d-flex flex-row flex-wrap w-100" onSubmit={handle}>
                   <div className="col-sm-12 col-md-6 col-lg-6 col-12 w-40 px-2">
                     <div className="dropdown ">
                       <label htmlFor="dropdown1">Select Day</label>
@@ -67,7 +112,7 @@ const [sc,setSc]=useState(0);
                         name="day"
                         id="dropdown1"
                         value={configurations.day}
-                        onChange={handleChange}
+                        onChange={handleCollectConfig}
                       >
                         <option value="">Select Day</option>
                         <option value="Full Day">Full Day</option>
@@ -81,7 +126,7 @@ const [sc,setSc]=useState(0);
                         name="ram"
                         id="dropdown2"
                         value={configurations.ram}
-                        onChange={handleChange}
+                        onChange={handleCollectConfig}
                       >
                         <option value="">Select Ram</option>
                         <option value="2">2</option>
@@ -96,7 +141,7 @@ const [sc,setSc]=useState(0);
                         name="cpu"
                         id="dropdown3"
                         value={configurations.cpu}
-                        onChange={handleChange}
+                        onChange={handleCollectConfig}
                       >
                         <option value="">Select cpu</option>
                         <option value="1"> 1</option>
@@ -111,7 +156,7 @@ const [sc,setSc]=useState(0);
                         name="storage"
                         id="dropdown3"
                         value={configurations.storage}
-                        onChange={handleChange}
+                        onChange={handleCollectConfig}
                       >
                         <option value="">Select Storage</option>
                         <option value="50"> 50</option>
@@ -127,7 +172,7 @@ const [sc,setSc]=useState(0);
                         name="access_type"
                         id="dropdown3"
                         value={configurations.access_type}
-                        onChange={handleChange}
+                        onChange={handleCollectConfig}
                       >
                         <option value="">Select AccessType</option>
                         <option value="Https"> Https</option>
@@ -144,7 +189,7 @@ const [sc,setSc]=useState(0);
                         name="public_ip"
                         id="dropdown3"
                         value={configurations.public_ip}
-                        onChange={handleChange}
+                        onChange={handleCollectConfig}
                       >
                         <option value="">Select Public Ip</option>
                         <option value="1"> 1</option>
@@ -159,14 +204,14 @@ const [sc,setSc]=useState(0);
                         name="lab_setup"
                         id="dropdown3"
                         value={configurations.lab_setup}
-                        onChange={handleChange}
+                        onChange={handleCollectConfig}
                       >
                         <option value="">Select Lab Type</option>
                         <option value="Basic"> Basic</option>
                         <option value="Intermediate"> Intermediate</option>
-                        <option value="Seurity"> Seurity</option>
-                        <option value="Advanced Labs"> Advanced Labs</option>
-                        <option value="Infrastructure Labs"> Infrastructure Labs</option>
+                        <option value="Security_Labs"> Seurity</option>
+                        <option value="Advanced_Labs"> Advanced Labs</option>
+                        <option value="Infrastructure_Labs"> Infrastructure Labs</option>
                       </select>
                     </div>
 
@@ -178,7 +223,7 @@ const [sc,setSc]=useState(0);
                         name="no_of_servers"
                         id="dropdown3"
                         value={configurations.no_of_servers}
-                        onChange={handleChange}
+                        onChange={handleCollectConfig}
                       >
                         <option value="">Select No of servers</option>
                         <option value="1"> 1</option>
@@ -193,7 +238,7 @@ const [sc,setSc]=useState(0);
                         name="no_of_days"
                         id="dropdown8"
                         value={configurations.no_of_days}
-                        onChange={handleChange}
+                        onChange={handleCollectConfig}
                       >
                         <option value="">Select No of days</option>
                         <option value="1"> 1</option>
@@ -215,29 +260,28 @@ const [sc,setSc]=useState(0);
             </div>
             <div className="col-sm-12 col-md-6 col-lg-6 col-12 p-4 d-flex justify-content-center ">
               <div className="input_data w-50 p-3  h6 border border-4 rounded border-info h-100">
-                <form>
+                <form onSubmit={(e) => { handleData(e) }} >
                   <div className="form-group m-2">
-                    <label for="server_cost">Enter Server Cost/Day</label>
-                    <input type="Number" className="form-control" id="server_cost" placeholder="Enter cost" onChange={async (e)=>{await setServercost_day(e.target.value)
-                    }
-                    } />
+                    <label for="ram_cost">Enter Ram Cost</label>
+                    <input type="Number" className="form-control" id="ram_cost" placeholder="Enter cost"
+                    />
                   </div>
                   <div className="form-group m-2">
-                    <label for="setup_cost">Enter Setup Cost</label>
-                    <input type="number" className="form-control" id="setup_cost" placeholder="Setup Cost" onChange={async (e)=>{await setLabsetupcost(e.target.value)}}/>
+                    <label for="cpu_cost">Enter Cpu Cost</label>
+                    <input type="number" className="form-control" id="cpu_cost" placeholder="Cpu Cost" />
                   </div>
                   <div className="form-group m-2">
-                    <label for="public_ip">Enter Public Ip Setup Cost</label>
-                    <input type="number" className="form-control" id="public_ip" placeholder="public Ip Cost" onChange={async (e)=>{await setIpcharges(e.target.value)}}/>
+                    <label for="ssd_cost">Enter SSD Cost</label>
+                    <input type="number" className="form-control" id="ssd_cost" placeholder="Ssd Cost" />
                   </div>
                   <div className="form-group m-2">
-                    <label for="server_cost">Enter Server Cost</label>
-                    <input type="number" className="form-control" id="server_cost" placeholder="Server Cost"  onChange={async (e)=>{await setServercost(e.target.value)}}/>
+                    <label for="public_ip_cost">Enter Ip cost</label>
+                    <input type="number" className="form-control" id="public_ip_cost" placeholder="Public Ip Cost" />
                   </div>
                   <div className="text-center my-4"><button type="submit " className="btn btn-primary w-100">Total Cost</button></div>
 
 
-                </form><h2 className="text-center my-2">Total cost:$50</h2>
+                </form><h2 className="text-center my-2">Total cost:{total_cost}</h2>
               </div>
             </div>
           </div>
