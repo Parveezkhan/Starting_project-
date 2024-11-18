@@ -16,6 +16,9 @@ const Dropdowns = () => {
     no_of_servers: 0,
     no_of_days: 0,
 });
+//for running a map function
+const keys = [...Array(10).keys()];
+
   const [ram_cost, setRam_cost] = useState(0);
   const [cpu_cost, setCpu_cost] = useState(0);
   const [ssd_cost, setSsd_cost] = useState(0)
@@ -48,11 +51,14 @@ const Dropdowns = () => {
     // calculateCost();
     const handleData = (event) => {
       event.preventDefault();
-  
-      setRam_cost(event.target.ram_cost.value)
-      setCpu_cost(event.target.cpu_cost.value)
-      setSsd_cost(event.target.ssd_cost.value)
-      setPublic_ip_cost(event.target.public_ip_cost.value)
+      const regex = '/([0-9]*[\.]{0,1}[0-9]{0,2})/s';
+      // return value.match(regex)[0];
+      if(Number(event.target.ram_cost.value)){setRam_cost(Number(event.target.ram_cost.value))}
+      if(Number(event.target.cpu_cost.value)){setCpu_cost(Number(event.target.cpu_cost.value))}
+      if(Number(event.target.ssd_cost.value)){setSsd_cost(Number(event.target.ssd_cost.value))}
+      if(Number(event.target.public_ip_cost.value)){setPublic_ip_cost(Number(event.target.public_ip_cost.value))}
+      
+      
       
   
       // //callback function
@@ -128,10 +134,15 @@ const Dropdowns = () => {
                         value={configurations.ram}
                         onChange={handleCollectConfig}
                       >
-                        <option value="">Select Ram</option>
-                        <option value="2">2</option>
-                        <option value="4">4</option>
-                        <option value="6">6</option>
+                        
+                        {keys.map((item)=>(
+                          item===0 ? <option value="">Select Ram</option> :
+                          <option value={item}>{item*4}</option>))
+                          }
+
+                        {/* <option value="4">4</option>
+                        <option value="8">8</option>
+                        <option value="12">12</option> */}
                       </select>
                     </div>
 
@@ -143,10 +154,10 @@ const Dropdowns = () => {
                         value={configurations.cpu}
                         onChange={handleCollectConfig}
                       >
-                        <option value="">Select cpu</option>
-                        <option value="1"> 1</option>
-                        <option value="2"> 2</option>
-                        <option value="3"> 3</option>
+                        {keys.map((item)=>(
+                          item===0 ? <option value="">Select cpu</option> :
+                          <option value={item}>{item*2}</option>))
+                          }
                       </select>
                     </div>
 
@@ -158,10 +169,10 @@ const Dropdowns = () => {
                         value={configurations.storage}
                         onChange={handleCollectConfig}
                       >
-                        <option value="">Select Storage</option>
-                        <option value="50"> 50</option>
-                        <option value="100"> 100</option>
-                        <option value="150"> 150</option>
+                        {keys.map((item)=>(
+                          item===0 ? <option value="">Select Storage</option> :
+                          <option value={item}>{item*50}</option>))
+                          }
                       </select>
                     </div>
                   </div>
@@ -192,6 +203,7 @@ const Dropdowns = () => {
                         onChange={handleCollectConfig}
                       >
                         <option value="">Select Public Ip</option>
+                        <option value="0">N/A</option>
                         <option value="1"> 1</option>
                         <option value="2"> 2</option>
                         <option value="3"> 3</option>
@@ -225,10 +237,10 @@ const Dropdowns = () => {
                         value={configurations.no_of_servers}
                         onChange={handleCollectConfig}
                       >
-                        <option value="">Select No of servers</option>
-                        <option value="1"> 1</option>
-                        <option value="2"> 2</option>
-                        <option value="3"> 3</option>
+                        {keys.map((item)=>(
+                          item===0 ? <option value="">Select No of servers</option> :
+                          <option value={item}>{item*1}</option>))
+                          }
                       </select>
                     </div>
 
@@ -240,13 +252,13 @@ const Dropdowns = () => {
                         value={configurations.no_of_days}
                         onChange={handleCollectConfig}
                       >
-                        <option value="">Select No of days</option>
-                        <option value="1"> 1</option>
-                        <option value="2"> 2</option>
-                        <option value="3"> 3</option>
+                        {keys.map((item)=>(
+                          item===0 ? <option value="">Select No of days</option> :
+                          <option value={item}>{item*1}</option>))
+                          }
                       </select>
                     </div>
-                    <div ><button type="submit" className="btn btn-primary mt-2">Submit</button></div>
+                    {/* <div ><button type="submit" className="btn btn-primary mt-2">Submit</button></div> */}
                   </div>
 
 
@@ -263,20 +275,20 @@ const Dropdowns = () => {
                 <form onSubmit={(e) => { handleData(e) }} >
                   <div className="form-group m-2">
                     <label for="ram_cost">Enter Ram Cost</label>
-                    <input type="Number" className="form-control" id="ram_cost" placeholder="Enter cost"
+                    <input type="text" className="form-control" id="ram_cost" placeholder="Enter cost"
                     />
                   </div>
                   <div className="form-group m-2">
                     <label for="cpu_cost">Enter Cpu Cost</label>
-                    <input type="number" className="form-control" id="cpu_cost" placeholder="Cpu Cost" />
+                    <input type="text" className="form-control" id="cpu_cost" placeholder="Cpu Cost" />
                   </div>
                   <div className="form-group m-2">
                     <label for="ssd_cost">Enter SSD Cost</label>
-                    <input type="number" className="form-control" id="ssd_cost" placeholder="Ssd Cost" />
+                    <input type="text" className="form-control" id="ssd_cost" placeholder="Ssd Cost" />
                   </div>
                   <div className="form-group m-2">
                     <label for="public_ip_cost">Enter Ip cost</label>
-                    <input type="number" className="form-control" id="public_ip_cost" placeholder="Public Ip Cost" />
+                    <input type="text" className="form-control" id="public_ip_cost" placeholder="Public Ip Cost" />
                   </div>
                   <div className="text-center my-4"><button type="submit " className="btn btn-primary w-100">Total Cost</button></div>
 
