@@ -6,6 +6,8 @@ import logo from "../images/Logo.png"
 
 
 const Login=()=>{
+
+  
   return(
     <>
     <Navbar/>
@@ -25,8 +27,8 @@ const Login=()=>{
     <label for="exampleInputPassword1" className='pass'>Password</label>
     <input type="password" class="form-control mb-3" id="exampleInputPassword1" placeholder="Password"/>
   </div>
-  
-  <button type="submit" class="btn btn-primary m-2" style={{width:'250px'}}>Login</button>
+   <Link to='/'>
+   <button type="submit" class="btn btn-primary m-2" style={{width:'250px'}}>Login</button></Link>
   <div className='last d-flex flex-column justify-content-center '>
   <div class="form-check mx-5">
   <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"/>

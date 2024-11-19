@@ -1,4 +1,5 @@
-import * as React from 'react';
+import * as React from 'react'; 
+import { useState } from 'react';
 import logo from "../images/Logo...png"
 import '../styles/Home.css'
 import { Link } from 'react-router-dom';
@@ -21,6 +22,14 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
+import Menu from '@mui/material/Menu';
+import Container from '@mui/material/Container';
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import Tooltip from '@mui/material/Tooltip';
+import MenuItem from '@mui/material/MenuItem';
+import AdbIcon from '@mui/icons-material/Adb';
+
 import { Stack } from '@mui/material';
 
 //icons
@@ -35,6 +44,11 @@ import ElectricalServicesIcon from '@mui/icons-material/ElectricalServices';
 import Slider from '../Home_Components/Slider';
 import Clouds_card_container from '../Home_Components/Clouds_card_container';
 import Footer from '../Home_Components/Footer';
+
+
+const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+
+
 
 const drawerWidth = 240;
 
@@ -128,7 +142,27 @@ export default function MiniDrawer() {
     setOpen(false);
   };
 
+ const [anchorElNav, setAnchorElNav] = useState(null);
+    const [anchorElUser, setAnchorElUser] = useState(null);
+    
+    const handleOpenNavMenu = (event) => {
+      setAnchorElNav(event.currentTarget);
+    };
+    const handleOpenUserMenu = (event) => {
+      setAnchorElUser(event.currentTarget);
+    };
+    
+    const handleCloseNavMenu = () => {
+      setAnchorElNav(null);
+    };
+    
+    const handleCloseUserMenu = () => {
+      setAnchorElUser(null);
+    };
+
   return (
+   
+
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
       <AppBar position="fixed" open={open}>
@@ -149,12 +183,48 @@ export default function MiniDrawer() {
           </IconButton>
           <Typography variant="h6" noWrap component="div" className='w-100 d-flex justify-content-between'>
             <img src={logo} alt='' className='img-fluid img'></img>
-
-            <Link to="/login" class="alert-link" className='text-end m-1 '>
+            <div className='d-flex fles-row mx-4 my-1'>
+            {/* <Link to="/login" class="alert-link" className='text-end mx-4 my-1 '>
               <button type="button" class="btn btn-primary  " style={{ width: "100px" }}>
                 Login
               </button>
-            </Link>
+            </Link> */}
+
+            <Box sx={{ flexGrow: 0 }}>
+            <Tooltip title="Open settings">
+              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg"  />
+              </IconButton>
+            </Tooltip>
+            <Menu
+              sx={{ mt: '45px' }}
+              id="menu-appbar"
+              anchorEl={anchorElUser}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              open={Boolean(anchorElUser)}
+              onClose={handleCloseUserMenu}
+            >
+              {settings.map((setting) => (
+                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                  <Typography sx={{ textAlign: 'center' }}>
+                  {setting=='Logout' && <Link to='/login' className="text-decoration-none text-dark">{setting} </Link>}
+                  {setting=='Dashboard' && <Link to='/' className="text-decoration-none text-dark">{setting}</Link>}
+                  {setting=='Profile' && <Link to='/' className="text-decoration-none text-dark">{setting}</Link>}
+                  {setting=='Account' && <Link to='/' className="text-decoration-none text-dark">{setting}</Link>}
+                  </Typography>
+                </MenuItem>
+              ))}
+            </Menu>
+          </Box>
+          </div>
 
           </Typography>
           {/* <div className="text-right "> */}
@@ -203,11 +273,11 @@ export default function MiniDrawer() {
                       },
                   ]}
                 >
-                  {(text === 'Home' && <Link to='/'><HomeIcon /></Link>)}
-                  {(text === 'Dashboard' && <Link to="/"><DashboardIcon /></Link>)}
-                  {(text === 'All Clouds' && <Link to="/"><CloudQueueIcon /></Link>)}
-                  {(text === "All Services" && <Link to="/"><ElectricalServicesIcon /></Link>)}
-                  {(text === 'Site Administration' && <Link to="/"><SettingsIcon /></Link>)}
+                  {(text === 'Home' && <HomeIcon />)}
+                  {(text === 'Dashboard' && <DashboardIcon />)}
+                  {(text === 'All Clouds' && <CloudQueueIcon />)}
+                  {(text === "All Services" && <ElectricalServicesIcon />)}
+                  {(text === 'Site Administration' && <SettingsIcon />)}
                 </ListItemIcon>
                 <ListItemText
                   primary={text}
@@ -279,9 +349,9 @@ export default function MiniDrawer() {
           ))}
         </List> */}
       </Drawer>
-      <Box component="main" sx={{ flexGrow: 1, p: 3 }} >
-        <DrawerHeader />
-        <Typography sx={{ marginBottom: 2 }} >
+      {/* <Box component="main" sx={{ flexGrow: 1, p: 3 }} >
+        <DrawerHeader /> */}
+        {/* <Typography sx={{ marginBottom: 2 }} >
         <div className='container-fluid'>
           <Slider/><hr className='border-2 border-dark my-4'/>
           <Clouds_card_container/>
@@ -290,9 +360,9 @@ export default function MiniDrawer() {
           <Footer/>
           
           
-        </Typography>
+        </Typography> */}
 
-      </Box>
+      {/* </Box> */}
     </Box>
   );
 }
