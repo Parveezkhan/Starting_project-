@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {  NavLink,Link, Navigate  } from 'react-router-dom';
+import {  NavLink,Link, useNavigate ,useHistory } from 'react-router-dom';
 import Navbar from '../Layout/Navbar';
 import '../styles/login.css'
 import logo from "../images/Logo.png"
@@ -13,19 +13,21 @@ const Signup=()=>{
     password:"",
     confirm_password:"",
   })
-  const [navigate,setNavigate] = useState('')
+  const [nav,setNav] = useState('')
+  const [error,setError]=useState('')
+  const navigate=useNavigate()
   const handleData=(e)=>{
       e.preventDefault();
       data.name=e.target.email.value;
       data.password=e.target.password.value;
       data.confirm_password=e.target.confirm_password.value;
-      console.log(data)
-    {e.target.password.value === e.target.confirm_password.value &&  // Save data to local storage
-      localStorage.setItem('credentials', JSON.stringify(data));
       
-    }
-    
-    }
+      // console.log(JSON.parse(localStorage.getItem('credentials')).name.value)
+    {e.target.password.value === e.target.confirm_password.value ?  
+      (localStorage.setItem('credentials', JSON.stringify(data)) ) : (localStorage.setItem('credentials'," ") )
+      
+    };
+}
   
 
   return(
@@ -39,6 +41,7 @@ const Signup=()=>{
         </div>
     <form  style={{width:'200px' }} className='form' onSubmit={handleData}>
   <div class="form-group m-2" >
+    <p id="error">{error}</p>
     <label for="email" className='lab'>Email address</label>
     <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email/username" />
     

@@ -273,11 +273,11 @@ export default function MiniDrawer() {
                       },
                   ]}
                 >
-                  {(text === 'Home' && <HomeIcon />)}
-                  {(text === 'Dashboard' && <DashboardIcon />)}
-                  {(text === 'All Clouds' && <CloudQueueIcon />)}
-                  {(text === "All Services" && <ElectricalServicesIcon />)}
-                  {(text === 'Site Administration' && <SettingsIcon />)}
+                 {(text === 'Home' && <Link to='/'><HomeIcon /></Link>)}
+                  {(text === 'Dashboard' && <Link to="/"><DashboardIcon /></Link>)}
+                  {(text === 'All Clouds' && <Link to="/services"><CloudQueueIcon /></Link>)}
+                  {(text === "All Services" && <Link to="/services/aws"><ElectricalServicesIcon /></Link>)}
+                  {(text === 'Site Administration' && <Link to="/"><SettingsIcon /></Link>)}
                 </ListItemIcon>
                 <ListItemText
                   primary={text}

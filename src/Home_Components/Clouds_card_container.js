@@ -22,7 +22,7 @@ const Clouds_card_container = () => {
               <div class="card-body">
                   <h5 class="card-title h3 fw-bolder">Aws Services</h5>
                   <p class="card-text">Explore the trending aws services.</p>
-                  <Link to="#" class="btn btn-primary">Explore Services</Link>
+                  <Link to="/services/aws" class="btn btn-primary">Explore Services</Link>
               </div>
           </div>
           <div class="card m-4" style={{width:"18rem"}}>
@@ -30,7 +30,7 @@ const Clouds_card_container = () => {
               <div class="card-body">
                   <h5 class="card-title h3 fw-bolder">Azure Services</h5>
                   <p class="card-text">Explore the trending azure services.</p>
-                  <Link to="#" class="btn btn-primary">Explore Services</Link>
+                  <Link to="/services/azure" class="btn btn-primary">Explore Services</Link>
               </div>
           </div>
           <div class="card m-4" style={{width:"18rem"}}>
@@ -38,7 +38,7 @@ const Clouds_card_container = () => {
               <div class="card-body">
                   <h5 class="card-title h3 fw-bolder">Google Cloud Services</h5>
                   <p class="card-text">Explore the trending gcp services.</p>
-                  <Link to="#" class="btn btn-primary">Explore Services</Link>
+                  <Link to="/services/gcp" class="btn btn-primary">Explore Services</Link>
               </div>
           </div>
           <div class="card m-4" style={{width:"18rem"}}>
@@ -46,7 +46,7 @@ const Clouds_card_container = () => {
               <div class="card-body">
                   <h5 class="card-title h3 fw-bolder">IBM Cloud Services</h5>
                   <p class="card-text">Explore the trending ibm services.</p>
-                  <Link to="#" class="btn btn-primary">Explore Services</Link>
+                  <Link to="/services/ibm" class="btn btn-primary">Explore Services</Link>
               </div>
           </div>
           <div class="card m-4" style={{width:"18rem"}}>
@@ -54,7 +54,7 @@ const Clouds_card_container = () => {
               <div class="card-body">
                   <h5 class="card-title h3 fw-bolder">Alibaba Cloud Services</h5>
                   <p class="card-text">Explore the trending alibaba services.</p>
-                  <Link to="#" class="btn btn-primary ">Explore Services</Link>
+                  <Link to="/services/alibaba" class="btn btn-primary ">Explore Services</Link>
               </div>
           </div>
           
