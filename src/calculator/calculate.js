@@ -258,10 +258,14 @@ const keys = [...Array(10).keys()];
                           }
                       </select>
                     </div>
-                    {/* <div ><button type="submit" className="btn btn-primary mt-2">Submit</button></div> */}
+                    <div >
+                   
                   </div>
-
-
+                  
+                  </div>
+                  <div className="total cost text-center w-100"><h2 className=" my-2">Total cost:{total_cost}</h2>
+                  <button type="submit" className="btn btn-primary mt-2">Confirm</button>
+                  </div>
                 </form>
               </div>
 
@@ -297,6 +301,7 @@ const keys = [...Array(10).keys()];
               </div>
             </div>
           </div>
+          
         </div>
       </section>
     </>

@@ -130,7 +130,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   }),
 );
 
-export default function MiniDrawer() {
+const MiniDrawer=()=>  {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
 
@@ -273,7 +273,7 @@ export default function MiniDrawer() {
                       },
                   ]}
                 >
-                 {(text === 'Home' && <Link to='/'><HomeIcon /></Link>)}
+                 {(text === 'Home' && <Link className='w-100' to='/'><HomeIcon /></Link>)}
                   {(text === 'Dashboard' && <Link to="/"><DashboardIcon /></Link>)}
                   {(text === 'All Clouds' && <Link to="/services"><CloudQueueIcon /></Link>)}
                   {(text === "All Services" && <Link to="/services/aws"><ElectricalServicesIcon /></Link>)}
@@ -366,3 +366,4 @@ export default function MiniDrawer() {
     </Box>
   );
 }
+export default MiniDrawer;

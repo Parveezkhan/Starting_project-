@@ -5,6 +5,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import logo from '../images/aws-logo.jpg'
 
 //import css
 import "../styles/Instance_Services.css"
@@ -119,9 +120,10 @@ let {cloud}=props.cloud;
   return (
     <>
       
-        <div className='container py-3 mt-5 border-primary'>
+        <div className='container py-3 mt-5 border-primary container1'>
+          <div className='logo text-center my-2 ' ><img src={logo} className='rounded-circle' style={{width:"100px" , height:"100px" }}></img></div>
           <div className='row  d-flex flex-row justify-content-center  py-2'>
-            <h3 className='text-center'>Instances And Its Configurations</h3>
+            <h3 className='text-center'>Aws Instances And Its Configurations</h3>
             <div className='col-12 col-ms-12 col-md-12 col-lg-4 '><div className='instance '>
             <FormControl sx={{ m: 1, width: 300 }} >
         <InputLabel id="demo-multiple-name-label">Server</InputLabel>

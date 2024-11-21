@@ -277,7 +277,7 @@ let {cloud} = useParams()
                       },
                   ]}
                 >
-                 {(text === 'Home' && <Link to='/'><HomeIcon /></Link>)}
+                 {(text === 'Home' && <Link to='/' ><HomeIcon className='W-100'/></Link>)}
                   {(text === 'Dashboard' && <Link to="/"><DashboardIcon /></Link>)}
                   {(text === 'All Clouds' && <Link to="/services"><CloudQueueIcon /></Link>)}
                   {(text === "All Services" && <Link to="/services/aws"><ElectricalServicesIcon /></Link>)}
