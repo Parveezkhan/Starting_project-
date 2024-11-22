@@ -26,6 +26,7 @@ const keys = [...Array(10).keys()];
   // Handle change for each dropdown
   const handleCollectConfig = (e) => {
     e.preventDefault()
+    console.log("29"+e.target.value)
     setConfigurations(
       { ...configurations, [e.target.name]: e.target.value }
     )
@@ -49,28 +50,17 @@ const keys = [...Array(10).keys()];
   }
 
     // calculateCost();
-    const handleData = (event) => {
-      event.preventDefault();
-      const regex = '/([0-9]*[\.]{0,1}[0-9]{0,2})/s';
-      // return value.match(regex)[0];
-      if(Number(event.target.ram_cost.value)){setRam_cost(Number(event.target.ram_cost.value))}
-      if(Number(event.target.cpu_cost.value)){setCpu_cost(Number(event.target.cpu_cost.value))}
-      if(Number(event.target.ssd_cost.value)){setSsd_cost(Number(event.target.ssd_cost.value))}
-      if(Number(event.target.public_ip_cost.value)){setPublic_ip_cost(Number(event.target.public_ip_cost.value))}
-      
-      
-      
-  
-      // //callback function
-      calculateCost();
-    }
 
-  const [total_cost, setTotal_cost] = useState(0);
+    const [total_cost, setTotal_cost] = useState(0);
   const calculateCost = () => {
     //server per day calculation
     let server_day_charges = Math.ceil(Number(configurations.ram) * ram_cost+ Number(configurations.cpu) * cpu_cost+ Number(configurations.storage) * ssd_cost);
     { (configurations.day === 'Half Day') ? (server_day_charges = server_day_charges - (server_day_charges * 0.3)) : server_day_charges = server_day_charges }
-  
+    
+    console.log(server_day_charges)
+    console.log(configurations.ram , configurations.cpu , configurations.storage)
+
+    
     ///  lab setup charges
     let config = '';
     {
@@ -101,6 +91,22 @@ const keys = [...Array(10).keys()];
    
     setTotal_cost( lab_setup_charges  + public_ipcharges +  server_cost_per_batch);
   }
+
+    const handleData = (event) => {
+      event.preventDefault();
+      const regex = '/([0-9]*[\.]{0,1}[0-9]{0,2})/s';
+      // return value.match(regex)[0];
+      if(Number(event.target.ram_cost.value)){setRam_cost(Number(event.target.ram_cost.value))}
+      if(Number(event.target.cpu_cost.value)){setCpu_cost(Number(event.target.cpu_cost.value))}
+      if(Number(event.target.ssd_cost.value)){setSsd_cost(Number(event.target.ssd_cost.value))}
+      if(Number(event.target.public_ip_cost.value)){setPublic_ip_cost(Number(event.target.public_ip_cost.value))}
+      
+      
+       // //callback function
+      calculateCost();
+    }
+
+  
 
   return (
     <>
@@ -137,7 +143,7 @@ const keys = [...Array(10).keys()];
                         
                         {keys.map((item)=>(
                           item===0 ? <option value="">Select Ram</option> :
-                          <option value={item}>{item*4}</option>))
+                          <option value={item*4}>{item*4}</option>))
                           }
 
                         {/* <option value="4">4</option>
@@ -156,7 +162,7 @@ const keys = [...Array(10).keys()];
                       >
                         {keys.map((item)=>(
                           item===0 ? <option value="">Select cpu</option> :
-                          <option value={item}>{item*2}</option>))
+                          <option value={item*2}>{item*2}</option>))
                           }
                       </select>
                     </div>
@@ -171,7 +177,7 @@ const keys = [...Array(10).keys()];
                       >
                         {keys.map((item)=>(
                           item===0 ? <option value="">Select Storage</option> :
-                          <option value={item}>{item*50}</option>))
+                          <option value={item*50}>{item*50}</option>))
                           }
                       </select>
                     </div>

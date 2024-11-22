@@ -7,6 +7,7 @@ import Clouds_card_container from './Home_Components/Clouds_card_container.js';
 import Side_Nav from  './Layout/Side_Nav.js'
 import Service  from './Services/Service.js';
 import {Account} from './users/Account.js'
+import User_List from './users/user_list.js'
 
 function App() {
   return (
@@ -20,8 +21,9 @@ function App() {
         <Route path='/services' element={<Clouds_card_container/>} />
         <Route path='/nav' element={<Side_Nav/>} />
         <Route path='/services/:cloud' element={<Service/>}/>
-
+        <Route path='/calculate' element={<Calculate/>}></Route>
         <Route path='/account/create_user' element={<Account/>}></Route>
+        <Route path='/account/user_list' element={<User_List/>}/>
       </Routes>
       
     </Router>

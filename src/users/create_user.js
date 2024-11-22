@@ -37,15 +37,12 @@ const PasswordGenerator = () => {
   let charset = "";
   let newPassword = "";
 
-   charset += "123@$abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz";
-  //  charset += "0123456789";
-  //  charset += "abcdefghijklmnopqrstuvwxyz";
-  // charset += "abcdefghijklmnopqrstuvwxyz";
-
+  charset += "123@$abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz";
   for(let i=0;i<11;i++){
-    newPassword+=charset.charAt(Math.floor(Math.random()*10))
+    newPassword+=charset.charAt(Math.floor(Math.random()*10));
   }
-  setPassword(newPassword)
+  // setPassword(newPassword);
+  return newPassword;
 }
 
 const [imagePreview, setImagePreview] = useState(null); // State for image preview
@@ -63,15 +60,20 @@ const [errorMessage, setErrorMessage] = useState(null); // Error state for valid
   };
 
   const handleChangepassword = (e) => {
+    
     let { name, value } = e.target;
     if(formData.disabled === 'no'){
-      value='yes'
+      value='yes';
+      console.log(PasswordGenerator());
     }
-    else{value='no'}
+    else{
+      value='no';
+    }
     setFormData({
       ...formData,
       [name]: value,
     });
+    
   };
 
   const handleSubmit = (e) => {
@@ -118,9 +120,9 @@ const handleClearData=(e)=>{
 
   return (
     <Container >
-      <Form >
-        <div className='border border-3  border-primary w-50 m-2 p-2 rounded '>
-      <Row className=" w-100 p-2  ">
+      <Form className='border border-3  border-primary  m-2 p-2 rounded w-50 mx-auto main'>
+        <div >
+      <Row className=" w-100 p-2 ">
       <h2 className='text-center text-info'>Create New User</h2>
         <Col md={6} sm={12}>
           
@@ -201,7 +203,7 @@ const handleClearData=(e)=>{
                 type="checkbox"
                 label="Generate Password"
                 name="disabled"
-                value='yes'
+                value={formData.disabled}
                 // checked={setDisabled ('yes')}
                 onChange={handleChangepassword}
                 
@@ -236,7 +238,13 @@ const handleClearData=(e)=>{
 
            
 
-            <Form.Group controlId="dateOfBirth">
+           
+           
+          
+        </Col>
+        <Col md={6} sm={12}> <Form.Group controlId="formImage">
+        
+        <Form.Group controlId="dateOfBirth">
               <Form.Label>Date of Birth</Form.Label>
               <Form.Control
                 type="date"
@@ -262,11 +270,8 @@ const handleClearData=(e)=>{
                 <option value="moderator">Moderator</option>
               </Form.Control>
             </Form.Group>
-           
-          
-        </Col>
-        <Col md={6} sm={12}> <Form.Group controlId="formImage">
-        
+
+
         <Form.Group controlId="formCountry">
               <Form.Label>Select Country</Form.Label>
               <Form.Control
