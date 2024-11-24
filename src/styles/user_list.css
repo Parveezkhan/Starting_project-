@@ -9,6 +9,9 @@
     .search_form{
         width: 150px !important;
     }
+    .add_field{
+        width: 150px !important;
+    }
  }
  .add_field{
     width: 250px !important;

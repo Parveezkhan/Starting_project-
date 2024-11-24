@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useState } from "react";
 import { useTheme } from "@mui/material/styles";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import InputLabel from "@mui/material/InputLabel";
@@ -8,9 +9,10 @@ import Select from "@mui/material/Select";
 
 //import css
 import "../styles/Instance_Services.css";
+import "../styles/check.css";
 
 //import images
-import logo from'../images/azure-logo.jpg'
+import logo from "../images/azure-logo.jpg";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -91,7 +93,7 @@ const MultipleSelect = (props) => {
   let Instance = [];
   let Vcpu = [];
   // let Storage = [];
-  let Category=[];
+  let Category = [];
   let I2 = [];
   let I1 = [];
   {
@@ -108,17 +110,54 @@ const MultipleSelect = (props) => {
       I1 = [];
     }
   }
- console.log(cloud)
+
+  const options = [
+    { label: "Azure ML", value: "Azure ML" },
+    { label: "Azure OpenAI Service ", value: "Azure OpenAI Service " },
+    { label: "Azure AI Vision pricing", value: "Azure AI Vision pricing" },
+    { label: "Azure AI Search", value: "Azure AI Search" },
+    { label: "Azure Analysis Services", value: "Azure Analysis Services" },
+    { label: "HDInsight on AKS", value: "HDInsight on AKS" },
+  ];
+
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedOptions, setSelectedOptions] = useState([]);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+
+  // Handle the checkbox change
+  const handleCheckboxChange = (e, value) => {
+    if (e.target.checked) {
+      setSelectedOptions([...selectedOptions, value]);
+    } else {
+      setSelectedOptions(selectedOptions.filter((item) => item !== value));
+    }
+  };
+
+  // Filter options based on the search query
+  const filteredOptions = options.filter((option) =>
+    option.label.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
     <>
       <div className="container py-3 mt-5 border-primary container1">
-      <div className='logo text-center my-2 ' ><img src={logo} className='rounded-circle' style={{width:"100px" , height:"100px" }}></img></div>
+        <div className="logo text-center my-2 ">
+          <img
+            src={logo}
+            className="rounded-circle"
+            style={{ width: "100px", height: "100px" }}
+          ></img>
+        </div>
         <div className="row  d-flex flex-row justify-content-center  py-2">
-          <h3 className="text-center">{cloud==='AWS' ? `Aws Instances And Its Configurations` : `Azure Instances And Its Configurations`}</h3>
+          <h3 className="text-center">
+            {cloud === "AWS"
+              ? `Aws Instances And Its Configurations`
+              : `Azure Instances And Its Configurations`}
+          </h3>
           <div className="col-12 col-ms-12 col-md-12 col-lg-4 ">
             <div className="instance ">
               <FormControl sx={{ m: 1, width: 300 }}>
-                <InputLabel id="demo-multiple-name-label">Server</InputLabel>
+                {/* <InputLabel id="demo-multiple-name-label">Server</InputLabel>
                 <Select
                   className="w-100"
                   labelId="demo-multiple-name-label"
@@ -140,7 +179,46 @@ const MultipleSelect = (props) => {
                       {name}
                     </MenuItem>
                   ))}
-                </Select>
+                </Select> */}
+
+                <div className="dropdown-container">
+                  <div
+                    className="dropdown-header w-100"
+                    onClick={() => setDropdownOpen(!dropdownOpen)}
+                  >
+                    Select Intances ({selectedOptions.length})
+                  </div>
+
+                  {dropdownOpen && (
+                    <div className="dropdown-list">
+                      {/* Search Input */}
+                      <input
+                        type="text"
+                        className="search-input"
+                        placeholder="Search..."
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                      />
+
+                      {/* Checkboxes */}
+                      <div className="checkbox-list">
+                        {filteredOptions.map((option) => (
+                          <label key={option.value} className="checkbox-item">
+                            <input
+                              type="checkbox"
+                              value={option.value}
+                              checked={selectedOptions.includes(option.value)}
+                              onChange={(e) =>
+                                handleCheckboxChange(e, option.value)
+                              }
+                            />
+                            {option.label}
+                          </label>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
               </FormControl>
             </div>
           </div>
@@ -177,7 +255,9 @@ const MultipleSelect = (props) => {
           <div className="col-12 col-ms-12 col-md-12 col-lg-4 ">
             <div className="instance ">
               <FormControl sx={{ m: 1, width: 300 }}>
-                <InputLabel id="demo-multiple-name-label">{server ===  "Azure ML" ? 'Instance Category' : "Select Model"}</InputLabel>
+                <InputLabel id="demo-multiple-name-label">
+                  {server === "Azure ML" ? "Instance Category" : "Select Model"}
+                </InputLabel>
                 <Select
                   className="w-100"
                   labelId="demo-multiple-name-label"
@@ -240,20 +320,22 @@ const MultipleSelect = (props) => {
           <div className="col-12 col-ms-12 col-md-12 col-lg-4 ">
             <div className="instance ">
               <FormControl sx={{ m: 1, width: 300 }}>
-                <InputLabel id="demo-multiple-name-label">{instance === 'General purpose' ? 'Ginstance'  : "Dinstance"}</InputLabel>
+                <InputLabel id="demo-multiple-name-label">
+                  {instance === "General purpose" ? "Ginstance" : "Dinstance"}
+                </InputLabel>
                 <Select
                   className="w-100"
                   labelId="demo-multiple-name-label"
                   id="demo-multiple-name"
                   // multiple
-                  value={instance === 'General purpose' ? i1  : i2}
+                  value={instance === "General purpose" ? i1 : i2}
                   onChange={(e) => {
                     setI1(e.target.value);
                   }}
                   input={<OutlinedInput label="Name" />}
                   MenuProps={MenuProps}
                 >
-                  {(instance === 'General purpose' ? I1  : I2).map((name) => (
+                  {(instance === "General purpose" ? I1 : I2).map((name) => (
                     <MenuItem
                       key={name}
                       value={name}
