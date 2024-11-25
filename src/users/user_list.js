@@ -1,14 +1,21 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Side_Nav from "../Layout/Side_Nav";
 
 //import css
 import "../styles/user_list.css";
 
+//import context
+import {EditUserContext,editContext} from '../Context/EditUserContext'
+
 //collect new field
 
-const User_list = () => {
+const User_list = (props) => {
+  const context=useContext(editContext);
+
   const [fields, setFields] = useState([
     "#",
+    "Admin For User",
     "First Name",
     "Last Name",
     "Email Address",
@@ -27,8 +34,41 @@ const User_list = () => {
 
   const handleGetinputdata = (e) => {
     e.preventDefault();
-    console.log(e.target.search_data.value);
+    let searchvalue=(e.target.search_data.value).trim()
+    setSearchQuery(searchvalue)
   };
+
+  const [users,setUsers]=useState([
+    {admin:"A1",firstName:"Mark",lastName:"otto",emailAddress:"@markotto",country:"India",city:"Bangalore",lastAccess:"1 day ago"},
+    {admin:"A2",firstName:"Larry",lastName:"page",emailAddress:"@larrypage",country:"India",city:"Bangalore",lastAccess:"2 day ago"},
+    {admin:"A3",firstName:"john",lastName:"mark",emailAddress:"@johnmark",country:"India",city:"Bangalore",lastAccess:"3 day ago"}
+  
+])
+
+  const [searchQuery,setSearchQuery]=useState("");
+
+  // Filter options based on the search query
+  let filteredOptions = users;
+
+   filteredOptions = users.filter((option) =>
+    option.firstName.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  //handeldelete
+  const handleDelete=(e,name)=>{
+    e.preventDefault();
+    setUsers((prevItems)=>prevItems.filter(item=>item.firstName!==name))
+    
+  }
+
+  //handle edit
+  const navigate=useNavigate()
+  const handleEdit=(e)=>{
+    e.preventDefault();
+    context.edit=true;
+    navigate('/account/create_user');
+  }
+
   return (
     <>
       <Side_Nav />
@@ -43,11 +83,12 @@ const User_list = () => {
                 className="form-control mr-sm-1 search_form"
                 name="search_data"
                 type="search"
-                placeholder="Search"
+                placeholder="Search firstname"
                 aria-label="Search"
+                onChange={(e)=>setSearchQuery(e.target.value)}
               />
               <button class="btn btn-outline-success mx-4  " type="submit">
-                Search
+                Search 
               </button>
             </form>
           </div>
@@ -61,7 +102,7 @@ const User_list = () => {
               aria-expanded="false"
               aria-controls="addfield"
             >
-              Toggle Add User
+              Toggle Add Field
             </a>
           </div>
           <div className="my-3  d-flex justify-content-end">
@@ -109,8 +150,31 @@ const User_list = () => {
             </tr>
           </thead>
           <tbody>
-            <tr>
+            {filteredOptions.map((user,index)=>(
+              <tr>
+                <th scope='row'>{index}</th>
+                <td>{user.admin}</td>
+                <td>{user.firstName}</td>
+                <td>{user.lastName}</td>
+                <td>{user.emailAddress}</td>
+                <td>{user.country}</td>
+                <td>{user.city}</td>
+                <td>{user.lastAccess}</td>
+                <td>
+                <div className="user_modification d-flex flex-row justify-content-start text-start">
+                  <button type="button" className="btn btn-primary mx-1" onClick={handleEdit}>
+                    Edit
+                  </button>
+                  <button type="button" className="btn btn-danger mx-1" onClick={(e)=>handleDelete(e,user.firstName)}>
+                    Delete
+                  </button>
+                </div>
+              </td>
+              </tr>
+            ))}
+            {/* <tr>
               <th scope="row">1</th>
+              <td>A1</td>
               <td>Mark</td>
               <td>Otto</td>
               <td>@mdo</td>
@@ -127,9 +191,10 @@ const User_list = () => {
                   </button>
                 </div>
               </td>
-            </tr>
-            <tr>
+            </tr> */}
+            {/* <tr>
               <th scope="row">2</th>
+              <td>A2</td>
               <td>Jacob</td>
               <td>Thornton</td>
               <td>@fat</td>
@@ -149,6 +214,7 @@ const User_list = () => {
             </tr>
             <tr>
               <th scope="row">3</th>
+              <td>A3</td>
               <td>Larry</td>
               <td>Bird</td>
               <td>@twitter</td>
@@ -165,7 +231,7 @@ const User_list = () => {
                   </button>
                 </div>
               </td>
-            </tr>
+            </tr> */}
           </tbody>
         </table>
       </div>

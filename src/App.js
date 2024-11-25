@@ -10,9 +10,15 @@ import { Account } from "./users/Account.js";
 import User_List from "./users/user_list.js";
 import Check_List from "./Services/check.js";
 
+
+//import context
+import {EditUserContext,editContext} from '../src/Context/EditUserContext.js'
+
 function App() {
   return (
     <>
+    
+    <EditUserContext>
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -25,9 +31,12 @@ function App() {
           <Route path="/calculate" element={<Calculate />}></Route>
           <Route path="/account/create_user" element={<Account />}></Route>
           <Route path="/account/user_list" element={<User_List />} />
+          <Route path='/account' element={<Account/>}/>
           <Route path="/check" element={<Check_List />} />
+          
         </Routes>
       </Router>
+      </EditUserContext>
     </>
   );
 }

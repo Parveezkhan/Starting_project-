@@ -1,5 +1,5 @@
 // src/components/UserCreationForm.js
-import React, { useState } from 'react';
+import React, { useState ,useContext} from 'react';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import OutlinedInput from '@mui/material/OutlinedInput';
@@ -10,8 +10,13 @@ import { Dropdown, DropdownButton, ButtonGroup } from 'react-bootstrap';
 //import css
 import '../styles/create_user.css'
 
+//import context
+import {EditUserContext,editContext} from '../Context/EditUserContext'
+
 
 const UserCreationForm = () => {
+  const context=useContext(editContext);
+
   const [formData, setFormData] = useState({
     userName:'',
     firstName: '',
@@ -123,7 +128,7 @@ const handleClearData=(e)=>{
       <Form className='border border-3  border-primary  m-2 p-2 rounded w-50 mx-auto main'>
         <div >
       <Row className=" w-100 p-2 ">
-      <h2 className='text-center text-info'>Create New User</h2>
+      <h2 className='text-center text-info'>{context.edit ==false ? 'Create New User' : "Edit User"}</h2>
         <Col md={6} sm={12}>
           
         <Form.Group controlId="userName">
@@ -333,7 +338,7 @@ const handleClearData=(e)=>{
             </Form.Group></Col>
       </Row>
       <Row className='justify-content-center w-100'> <Button variant="primary" type="submit" block className='mt-3 w-50'>
-              Create User
+      {context.edit ==false ? 'Create User' : "Update User"}
             </Button>
             <button className=" btn btn-secondary w-50 m-3" type="button" block  onClick={handleClearData}>
               Clear All

@@ -172,58 +172,58 @@ export default function MiniDrawer() {
         <Divider className='bg-light' />
         <List >
           {['Home', 'Dashboard', 'All Clouds', "All Services", 'Site Administration'].map((text, index) => (
-            <ListItem key={text} disablePadding sx={{ display: 'block' }}>
-              <ListItemButton
-                sx={[
-                  {
-                    minHeight: 48,
-                    px: 2.5,
+          <ListItem key={text} disablePadding sx={{ display: 'block' }}>
+          <ListItemButton
+            sx={[
+              {
+                minHeight: 48,
+                px: 2.5,
+              },
+              open
+                ? {
+                  justifyContent: 'initial',
+                }
+                : {
+                  justifyContent: 'center',
+                },
+            ]}
+          >
+            <ListItemIcon
+              sx={[
+                {
+                  minWidth: 0,
+                  justifyContent: 'center',
+                },
+                open
+                  ? {
+                    mr: 3,
+                  }
+                  : {
+                    mr: 'auto',
                   },
-                  open
-                    ? {
-                      justifyContent: 'initial',
-                    }
-                    : {
-                      justifyContent: 'center',
-                    },
-                ]}
-              >
-                <ListItemIcon
-                  sx={[
-                    {
-                      minWidth: 0,
-                      justifyContent: 'center',
-                    },
-                    open
-                      ? {
-                        mr: 3,
-                      }
-                      : {
-                        mr: 'auto',
-                      },
-                  ]}
-                >
-                  {(text === 'Home' && <Link to='/'><HomeIcon /></Link>)}
-                  {(text === 'Dashboard' && <Link to="/"><DashboardIcon /></Link>)}
-                  {(text === 'All Clouds' && <Link to="/services"><CloudQueueIcon /></Link>)}
-                  {(text === "All Services" && <Link to="/services/aws"><ElectricalServicesIcon /></Link>)}
-                  {(text === 'Site Administration' && <Link to="/"><SettingsIcon /></Link>)}
-                </ListItemIcon>
-                <ListItemText
-                  primary={text}
-                  sx={[
-                    open
-                      ? {
-                        opacity: 1,
-                      }
-                      : {
-                        opacity: 0,
-                      },
-                  ]}
+              ]}
+            >
+              {(text === 'Home' && <Link to='/'><HomeIcon /></Link>)}
+              {(text === 'Dashboard' && <Link to="/"><DashboardIcon /></Link>)}
+              {(text === 'All Clouds' && <Link to="/services"><CloudQueueIcon /></Link>)}
+              {(text === "All Services" && <Link to="/services/aws"><ElectricalServicesIcon /></Link>)}
+              {(text === 'Site Administration' && <Link to="/"><SettingsIcon /></Link>)}
+            </ListItemIcon>
+            <ListItemText
+              primary={text}
+              sx={[
+                open
+                  ? {
+                    opacity: 1,
+                  }
+                  : {
+                    opacity: 0,
+                  },
+              ]}
 
-                />
-              </ListItemButton>
-            </ListItem>
+            />
+          </ListItemButton>
+        </ListItem>  
           ))}
         </List>
         <Divider />

@@ -10,6 +10,8 @@ import logo from "../images/aws-logo.jpg";
 
 //import css
 import "../styles/check.css";
+import "../styles/aws.css"
+
 import { Checkbox, ListItemIcon, ListItemText } from "@mui/material";
 import { CheckBox } from "@mui/icons-material";
 
@@ -42,7 +44,7 @@ const MenuProps = {
 const Os = ["windows", "macos", "linux", "ubuntu"];
 
 //ec2 instance
-const ec2_instance = ["t2.micro-Free tier eligible", "t2.nano"];
+const ec2_instance = ["t2.micro-Free tier eligible	1 GiB Memory 1 vCPU	ESB only	Up to 5 Gigabit" , "t2.nano	0.5 GiB Memory	1 vCPU	ESB Only	Up to 5 Gigabit"];
 //ec2 cpu
 const ec2_vcpu = ["1 vcpu", "2 vcpu", "4 vcpu"];
 //ec2 storage
@@ -83,27 +85,15 @@ const MultipleSelect = (props) => {
   //props
   let { cloud } = props.cloud;
 
-  const [server, setServer] = React.useState([]);
+  const [service, setService] = React.useState('');
   const [os, setOs] = React.useState("");
   const [instance, setInstance] = React.useState("");
   const [vcpu, setVcpu] = React.useState("");
   const [storage, setStorage] = React.useState("");
+  const [ram,setRam]=React.useState("");
 
-  //type of instance assigning
-  let Instance = [];
-  let Vcpu = [];
-  let Storage = [];
-  {
-    if (server === "EC2") {
-      Instance = ec2_instance;
-      Vcpu = ec2_vcpu;
-      Storage = ec2_storage;
-    } else if (server === "RDS") {
-      Instance = rds_instance;
-      Vcpu = rds_vcpu;
-      Storage = rds_storage;
-    }
-  }
+ //for running a map function
+  const keys = [...Array(10).keys()];
 
   //dropdown instances
   const options = [
@@ -125,6 +115,7 @@ const MultipleSelect = (props) => {
   const handleCheckboxChange = (e, value) => {
     if (e.target.checked) {
       setSelectedOptions([...selectedOptions, value]);
+      setService(value)
     } else {
       setSelectedOptions(selectedOptions.filter((item) => item !== value));
     }
@@ -134,6 +125,31 @@ const MultipleSelect = (props) => {
   const filteredOptions = options.filter((option) =>
     option.label.toLowerCase().includes(searchQuery.toLowerCase())
   );
+
+//save configurations
+const handleSaveConfigurations=(e)=>{
+  e.preventDefault();
+}
+
+
+ //type of instance assigning
+ let Instance = [];
+ let Vcpu = [];
+ let Storage = [];
+ 
+ {
+  //  console.log(selectedOptions)
+   if (service === "EC2") {
+     Instance = ec2_instance;
+     Vcpu = ec2_vcpu;
+     Storage = ec2_storage;
+   } else if (service === "RDS") {
+     Instance = rds_instance;
+     Vcpu = rds_vcpu;
+     Storage = rds_storage;
+   }
+ }
+
 
   return (
     <>
@@ -174,7 +190,7 @@ const MultipleSelect = (props) => {
                     className="dropdown-header w-100"
                     onClick={() => setDropdownOpen(!dropdownOpen)}
                   >
-                    Select Intances ({selectedOptions.length})
+                    Select Services ({selectedOptions.length})
                   </div>
 
                   {dropdownOpen && (
@@ -242,7 +258,7 @@ const MultipleSelect = (props) => {
           </div>
           <div className="col-12 col-ms-12 col-md-12 col-lg-4 ">
             <div className="instance ">
-              <FormControl sx={{ m: 1, width: 300 }}>
+              <FormControl sx={{ m: 1, width: 300 }} >
                 <InputLabel id="demo-multiple-name-label">Instance</InputLabel>
                 <Select
                   className="w-100"
@@ -251,20 +267,23 @@ const MultipleSelect = (props) => {
                   // multiple
                   value={instance}
                   onChange={(e) => {
+                    console.log(e)
                     setInstance(e.target.value);
                   }}
                   input={<OutlinedInput label="Name" />}
                   MenuProps={MenuProps}
                 >
+             
                   {Instance.map((name) => (
-                    <MenuItem
+                      <MenuItem className="menuitem"
                       key={name}
                       value={name}
                       // style={getStyles(name, personName, theme)}
                     >
                       {name}
                     </MenuItem>
-                  ))}
+                    
+                  ))} 
                 </Select>
               </FormControl>
             </div>
@@ -272,7 +291,7 @@ const MultipleSelect = (props) => {
         </div>
 
         {/* row 2 */}
-        <div className="row  d-flex flex-row justify-content-center ">
+         <div className="row  d-flex flex-row justify-content-center ">
           <div className="col-12 col-sm-12 col-md-12 col-xl-4 ">
             <div className="instance w-100">
               <FormControl sx={{ m: 1, width: 300 }}>
@@ -319,44 +338,56 @@ const MultipleSelect = (props) => {
                   input={<OutlinedInput label="Name" />}
                   MenuProps={MenuProps}
                 >
-                  {Storage.map((name) => (
-                    <MenuItem
-                      key={name}
-                      value={name}
+                  {keys.map((key) => (
+                    key !==0 && <MenuItem
+                      key={key}
+                      value={key*50}
                       // style={getStyles(name, personName, theme)}
                     >
-                      {name}
+                      {key*50}
                     </MenuItem>
+                  
+                    
                   ))}
                 </Select>
               </FormControl>
             </div>
           </div>
-          {/* <div className='col-12 col-ms-12 col-md-12 col-lg-4 '><div className='instance '>
+           <div className='col-12 col-ms-12 col-md-12 col-lg-4 '><div className='instance '>
             <FormControl sx={{ m: 1, width: 300 }} >
-        <InputLabel id="demo-multiple-name-label">Instance</InputLabel>
+        <InputLabel id="demo-multiple-name-label">Ram</InputLabel>
         <Select
           className='w-100'
           labelId="demo-multiple-name-label"
           id="demo-multiple-name"
           // multiple
-          value={personName}
-          onChange={handleChange}
+          value={ram}
+          onChange={(e)=>setRam(e.target.value)}
           input={<OutlinedInput label="Name" />}
           MenuProps={MenuProps}
         >
-          {Instances.map((name) => (
+          {keys.map((key) => (
+            key !==0 && 
             <MenuItem
-              key={name}
-              value={name}
-              style={getStyles(name, personName, theme)}
+              key={key}
+              value={key*2}
+              // style={getStyles(name, personName, theme)}
             >
-              {name}
+              {key*2}
             </MenuItem>
           ))}
         </Select></FormControl>
-        </div></div> */}
-        </div>
+        </div></div>
+        </div> 
+            
+       
+       {/* row 3 for submitting intance and its configurations */}
+       <div className='row  d-flex flex-row justify-content-center m-2 text-center'>
+        <form>
+          <button type="submit" className="btn btn-primary" style={{width:"250px"}} onSubmit={handleSaveConfigurations}>Submit</button>
+        </form>
+       </div>
+
 
         {/* row -3  */}
         {/* <div className='row  d-flex flex-row justify-content-center '>

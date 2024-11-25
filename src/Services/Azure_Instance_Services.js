@@ -25,6 +25,9 @@ const MenuProps = {
   },
 };
 
+ //for running a map function
+ const keys = [...Array(10).keys()];
+
 const Server = [
   "Azure ML",
   "Azure OpenAI Service ",
@@ -82,10 +85,12 @@ const MultipleSelect = (props) => {
   //props
   let { cloud } = props.cloud;
 
-  const [server, setServer] = React.useState("");
+  const [service, setService] = React.useState("");
   const [os, setOs] = React.useState("");
   const [instance, setInstance] = React.useState("");
   const [vcpu, setVcpu] = React.useState("");
+  const [storage,setStorage]=React.useState("");
+  const [ram,setRam]=React.useState("")
   const [i1, setI1] = React.useState("");
   const [i2, setI2] = React.useState("");
 
@@ -97,12 +102,12 @@ const MultipleSelect = (props) => {
   let I2 = [];
   let I1 = [];
   {
-    if (server === "Azure ML") {
+    if (service === "Azure ML") {
       Instance = azure_ml_category;
       Vcpu = azure_ml_vcpu;
       I1 = azure_ml_ginstance;
       I2 = azure_ml_dinstance;
-    } else if (server === "Azure OpenAI Service ") {
+    } else if (service === "Azure OpenAI Service ") {
       Instance = azure_openai_model;
       Vcpu = azure_openai_vcpu;
       //   Storage=[];
@@ -127,6 +132,7 @@ const MultipleSelect = (props) => {
   // Handle the checkbox change
   const handleCheckboxChange = (e, value) => {
     if (e.target.checked) {
+      setService(value)
       setSelectedOptions([...selectedOptions, value]);
     } else {
       setSelectedOptions(selectedOptions.filter((item) => item !== value));
@@ -186,7 +192,7 @@ const MultipleSelect = (props) => {
                     className="dropdown-header w-100"
                     onClick={() => setDropdownOpen(!dropdownOpen)}
                   >
-                    Select Intances ({selectedOptions.length})
+                    Select Service ({selectedOptions.length})
                   </div>
 
                   {dropdownOpen && (
@@ -256,7 +262,7 @@ const MultipleSelect = (props) => {
             <div className="instance ">
               <FormControl sx={{ m: 1, width: 300 }}>
                 <InputLabel id="demo-multiple-name-label">
-                  {server === "Azure ML" ? "Instance Category" : "Select Model"}
+                  {service === "Azure ML" ? "Instance Category" : "Select Model"}
                 </InputLabel>
                 <Select
                   className="w-100"
@@ -320,60 +326,61 @@ const MultipleSelect = (props) => {
           <div className="col-12 col-ms-12 col-md-12 col-lg-4 ">
             <div className="instance ">
               <FormControl sx={{ m: 1, width: 300 }}>
-                <InputLabel id="demo-multiple-name-label">
-                  {instance === "General purpose" ? "Ginstance" : "Dinstance"}
-                </InputLabel>
+                <InputLabel id="demo-multiple-name-label">Storage</InputLabel>
                 <Select
                   className="w-100"
                   labelId="demo-multiple-name-label"
                   id="demo-multiple-name"
                   // multiple
-                  value={instance === "General purpose" ? i1 : i2}
+                  value={storage}
                   onChange={(e) => {
-                    setI1(e.target.value);
+                    setStorage(e.target.value);
                   }}
                   input={<OutlinedInput label="Name" />}
                   MenuProps={MenuProps}
                 >
-                  {(instance === "General purpose" ? I1 : I2).map((name) => (
-                    <MenuItem
-                      key={name}
-                      value={name}
+                  {keys.map((key) => (
+                    key !==0 && <MenuItem
+                      key={key}
+                      value={key*50}
                       // style={getStyles(name, personName, theme)}
                     >
-                      {name}
+                      {key*50}
                     </MenuItem>
+                  
+                    
                   ))}
                 </Select>
               </FormControl>
             </div>
           </div>
-          {/* <div className="col-12 col-ms-12 col-md-12 col-lg-4 ">
-            <div className="instance ">
-              <FormControl sx={{ m: 1, width: 300 }}>
-                <InputLabel id="demo-multiple-name-label">DInstance</InputLabel>
-                <Select
-                  className="w-100"
-                  labelId="demo-multiple-name-label"
-                  id="demo-multiple-name"
-                  // multiple
-                  value={i2}
-                  onChange={(e) => {
-                    setI2(e.target.value);
-                  }}
-                  input={<OutlinedInput label="Name" />}
-                  MenuProps={MenuProps}
-                >
-                  {I2.map((name) => (
-                    <MenuItem key={name} value={name}>
-                      {name}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </div>
-          </div> */}
-        </div>
+           <div className='col-12 col-ms-12 col-md-12 col-lg-4 '><div className='instance '>
+            <FormControl sx={{ m: 1, width: 300 }} >
+        <InputLabel id="demo-multiple-name-label">Ram</InputLabel>
+        <Select
+          className='w-100'
+          labelId="demo-multiple-name-label"
+          id="demo-multiple-name"
+          // multiple
+          value={ram}
+          onChange={(e)=>setRam(e.target.value)}
+          input={<OutlinedInput label="Name" />}
+          MenuProps={MenuProps}
+        >
+          {keys.map((key) => (
+            key !==0 && 
+            <MenuItem
+              key={key}
+              value={key*2}
+              // style={getStyles(name, personName, theme)}
+            >
+              {key*2}
+            </MenuItem>
+          ))}
+        </Select></FormControl>
+        </div></div>
+        </div> 
+
 
         {/* row -3  */}
         {/* <div className='row  d-flex flex-row justify-content-center '>

@@ -4,6 +4,8 @@ import Navbar from '../Layout/Navbar';
 import '../styles/login.css'
 import logo from "../images/Logo.png"
 
+import GoogleIcon from '@mui/icons-material/Google';
+
 
 const Login=()=>{
  
@@ -30,15 +32,25 @@ const Login=()=>{
    <Link to='/'>
    <button type="submit" class="btn btn-primary m-2" style={{width:'250px'}}>Login</button></Link>
   <div className='last d-flex flex-column justify-content-center '>
+
+  <div className='login-with m-2 text-center justify-content-center'>
+   <span>or </span>
+   <span>Login with</span>
+   <div className='g-icon border border-2 border-white p-2 m-2 '><GoogleIcon/> Google
+   </div>
+</div>
+
   <div class="form-check mx-5">
   <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"/>
   <label class="form-check-label" for="flexCheckDefault">
     Remember me
   </label>
 </div>
-<div className='forgot-password mx-5'>
+{/* <div className='forgot-password mx-5'>
     <Link to="/" className='mx-3 link' >Forgot password?</Link>
-</div>
+</div> */}
+
+
   </div>
   
 </form>

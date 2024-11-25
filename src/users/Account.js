@@ -14,7 +14,7 @@ export const Account = () => {
   <Side_Nav/>
   <div className='container2 '> 
     <div className='container-fluid p-2 '>
-      <Create_User/>
+      
     </div>
   </div>
   </>
