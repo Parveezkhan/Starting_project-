@@ -6,6 +6,7 @@ const JWT = require('jsonwebtoken');
 
 const randomRegisterController = async (req, res) => {
     try {
+      console.log(req.body)
       const { emailAddress, password,  purpose } = req.body;
       if (!emailAddress) {
         return res.send({ message: "email is Required.." });
@@ -84,7 +85,6 @@ const randomRegisterController = async (req, res) => {
         message:"Login successfull",
         user:{
           emailAddress:user.emailAddress,
-          purpose:user.purpose,
         },
         token,
       })

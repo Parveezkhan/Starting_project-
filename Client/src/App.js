@@ -14,12 +14,14 @@ import Accounts from './users/Accounts.js'
 
 //import context
 import {EditUserContext,editContext} from '../src/Context/EditUserContext.js'
+import {useAuth,AuthProvider} from '../src/Context/auth.js';
 
 function App() {
   return (
     <>
     
     <EditUserContext>
+      <AuthProvider>
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -37,6 +39,7 @@ function App() {
           <Route path="/accounts" element={<Accounts/>} />
         </Routes>
       </Router>
+      </AuthProvider>
       </EditUserContext>
     </>
   );

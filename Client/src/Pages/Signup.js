@@ -3,6 +3,8 @@ import {  NavLink,Link, useNavigate ,useHistory } from 'react-router-dom';
 import Navbar from '../Layout/Navbar';
 import '../styles/login.css'
 import logo from "../images/Logo.png"
+import axios from "axios";
+import toast from 'react-hot-toast';
 
 
 
@@ -12,28 +14,43 @@ const Signup=()=>{
   const [error,setError]=useState('');
   const [purpose,setPurpose]=useState('');
  
-  const [data,setData]=useState({
-    name:"",
-    password:"",
-    confirm_password:"",
-  })
+  const [emailAddress,setEmailAddress] = useState('');
+  const [password,setPassword] = useState("");
+  const [confirmPassword,setConfirmPassword]= useState('');
   
 
   const navigate=useNavigate()
-  const handleData=(e)=>{
+  const handleData=async (e)=>{
       e.preventDefault();
-      data.name=e.target.email.value;
-      data.password=e.target.password.value;
-      data.confirm_password=e.target.confirm_password.value;
       
       // console.log(JSON.parse(localStorage.getItem('credentials')).name.value)
-    {e.target.password.value === e.target.confirm_password.value ?  
-      (localStorage.setItem('credentials', JSON.stringify(data)) ) : (localStorage.setItem('credentials'," ") )
+     if(e.target.password.value === e.target.confirm_password.value){
+      try{
+        const res  =await axios.post('http://localhost:5000/api/auth/register',
+        {
+          emailAddress,
+          password,
+          purpose,
+        });
+        if(res && res.data.success){
+          toast.success(res.data && res.data.message);
+          navigate('/login')
+        }
+        else{
+          console.log('no')
+          toast.error(res.data.message);
+        }
+        }
+      catch(error){
+            console.log(error)
+          }
+     } 
+     else {
+      console.log('mismatch')
+      toast.error('Password Mismatch')
+     }
       
     };
-}
-  
-
   return(
     <>
     <Navbar/>
@@ -47,17 +64,17 @@ const Signup=()=>{
   <div class="form-group m-2" >
     <p id="error">{error}</p>
     <label for="email" className='lab'>Email address</label>
-    <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email/username" />
+    <input type="email" value={emailAddress} class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email/username" onChange={(e)=>setEmailAddress(e.target.value)}/>
     
   </div>
   <div class="form-group m-2">
     <label for="password" className='pass'>Password</label>
-    <input type="password" class="form-control mb-3" id="password" placeholder="Password" />
+    <input type="password" value={password} class="form-control mb-3" id="password" placeholder="Password" onChange={(e)=>setPassword(e.target.value)} />
   </div>
 
   <div class="form-group m-2">
     <label for="confirm_password" className='pass'>Confirm Password</label>
-    <input type="password" class="form-control mb-3" id="confirm_password" placeholder="Confirm Password" />
+    <input type="password" value={confirmPassword} class="form-control mb-3" id="confirm_password" placeholder="Confirm Password" onChange={(e)=>setConfirmPassword(e.target.value)}/>
   </div>
 
   <div class="form-group m-2">
